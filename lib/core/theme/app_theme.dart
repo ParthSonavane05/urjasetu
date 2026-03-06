@@ -6,6 +6,9 @@ import '../constants/app_values.dart';
 class AppTheme {
   AppTheme._();
 
+  // ═══════════════════════════════════════════
+  //  LIGHT THEME
+  // ═══════════════════════════════════════════
   static ThemeData get lightTheme {
     return ThemeData(
       useMaterial3: true,
@@ -15,6 +18,7 @@ class AppTheme {
       colorScheme: const ColorScheme.light(
         primary: AppColors.primary,
         secondary: AppColors.secondary,
+        tertiary: AppColors.solarYellow,
         surface: AppColors.surfaceLight,
         error: AppColors.error,
       ),
@@ -92,6 +96,99 @@ class AppTheme {
     );
   }
 
+  // ═══════════════════════════════════════════
+  //  DARK THEME
+  // ═══════════════════════════════════════════
+  static ThemeData get darkTheme {
+    return ThemeData(
+      useMaterial3: true,
+      brightness: Brightness.dark,
+      primaryColor: AppColors.primary,
+      scaffoldBackgroundColor: AppColors.backgroundDark,
+      colorScheme: const ColorScheme.dark(
+        primary: AppColors.primary,
+        secondary: AppColors.secondary,
+        tertiary: AppColors.solarYellow,
+        surface: AppColors.surfaceDark,
+        error: AppColors.error,
+      ),
+      textTheme: _textTheme(AppColors.textDarkPrimary),
+      appBarTheme: AppBarTheme(
+        backgroundColor: AppColors.backgroundDark,
+        elevation: 0,
+        centerTitle: false,
+        titleTextStyle: GoogleFonts.inter(
+          color: AppColors.textDarkPrimary,
+          fontSize: 20,
+          fontWeight: FontWeight.w700,
+        ),
+        iconTheme: const IconThemeData(color: AppColors.textDarkPrimary),
+      ),
+      cardTheme: CardThemeData(
+        color: AppColors.cardDark,
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppValues.radiusLg),
+          side: const BorderSide(color: AppColors.borderDark, width: 1),
+        ),
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.primary,
+          foregroundColor: AppColors.textLight,
+          elevation: 0,
+          minimumSize: const Size(double.infinity, AppValues.buttonHeight),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppValues.radiusLg),
+          ),
+          textStyle: GoogleFonts.inter(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ),
+      inputDecorationTheme: InputDecorationTheme(
+        filled: true,
+        fillColor: AppColors.cardDark,
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: AppValues.paddingMd,
+          vertical: AppValues.paddingMd,
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AppValues.radiusLg),
+          borderSide: const BorderSide(color: AppColors.borderDark),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AppValues.radiusLg),
+          borderSide: const BorderSide(color: AppColors.borderDark),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AppValues.radiusLg),
+          borderSide: const BorderSide(color: AppColors.primary, width: 2),
+        ),
+        hintStyle: GoogleFonts.inter(
+          color: AppColors.textDarkSecondary,
+          fontSize: 14,
+        ),
+      ),
+      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+        backgroundColor: AppColors.surfaceDark,
+        selectedItemColor: AppColors.solarYellow,
+        unselectedItemColor: AppColors.textDarkSecondary,
+        type: BottomNavigationBarType.fixed,
+        elevation: 0,
+      ),
+      dividerTheme: const DividerThemeData(
+        color: AppColors.borderDark,
+        thickness: 1,
+        space: 0,
+      ),
+    );
+  }
+
+  // ═══════════════════════════════════════════
+  //  TEXT THEME
+  // ═══════════════════════════════════════════
   static TextTheme _textTheme(Color baseColor) {
     return TextTheme(
       headlineLarge: GoogleFonts.inter(

@@ -12,6 +12,7 @@ class AuthProvider extends ChangeNotifier {
   UserModel? get user => _user;
   bool get isLoading => _isLoading;
   bool get isLoggedIn => _user != null;
+  bool get isSetupComplete => _user?.isSetupComplete ?? false;
   String? get error => _error;
 
   String get greeting {
@@ -36,6 +37,43 @@ class AuthProvider extends ChangeNotifier {
       _isLoading = false;
       notifyListeners();
       return false;
+    }
+  }
+
+  Future<bool> signup(String name, String email, String password) async {
+    _isLoading = true;
+    _error = null;
+    notifyListeners();
+
+    try {
+      // Simulate signup delay
+      await Future.delayed(const Duration(milliseconds: 800));
+      _user = UserModel(name: name, email: email);
+      _isLoading = false;
+      notifyListeners();
+      return true;
+    } catch (e) {
+      _error = 'Signup failed. Please try again.';
+      _isLoading = false;
+      notifyListeners();
+      return false;
+    }
+  }
+
+  void setCity(String city) {
+    if (_user != null) {
+      _user = _user!.copyWith(city: city);
+      notifyListeners();
+    }
+  }
+
+  void setRole(UserRole role) {
+    if (_user != null) {
+      _user = _user!.copyWith(role: role);
+      if (role == UserRole.solarOwner) {
+        _user = _user!.copyWith(solarCapacity: 5.0);
+      }
+      notifyListeners();
     }
   }
 

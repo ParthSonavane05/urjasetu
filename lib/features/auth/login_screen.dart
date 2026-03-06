@@ -18,6 +18,8 @@ class _LoginScreenState extends State<LoginScreen>
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  bool _obscurePassword = true;
+
   late AnimationController _animController;
   late Animation<Offset> _slideAnimation;
   late Animation<double> _fadeAnimation;
@@ -67,7 +69,6 @@ class _LoginScreenState extends State<LoginScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundLight,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(AppValues.paddingLg),
@@ -83,25 +84,14 @@ class _LoginScreenState extends State<LoginScreen>
                     const SizedBox(height: 60),
 
                     // Logo
-                    Container(
-                      width: 64,
-                      height: 64,
-                      decoration: BoxDecoration(
-                        gradient: AppColors.primaryGradient,
-                        borderRadius:
-                            BorderRadius.circular(AppValues.radiusLg),
-                        boxShadow: [
-                          BoxShadow(
-                            color: AppColors.primary.withValues(alpha: 0.3),
-                            blurRadius: 20,
-                            offset: const Offset(0, 6),
-                          ),
-                        ],
-                      ),
-                      child: const Icon(
-                        Icons.bolt_rounded,
-                        color: Colors.white,
-                        size: 32,
+                    ClipRRect(
+                      borderRadius:
+                          BorderRadius.circular(AppValues.radiusLg),
+                      child: Image.asset(
+                        'assets/images/logo.png',
+                        width: 72,
+                        height: 72,
+                        fit: BoxFit.contain,
                       ),
                     ),
 
@@ -155,10 +145,21 @@ class _LoginScreenState extends State<LoginScreen>
                     const SizedBox(height: AppValues.paddingSm),
                     TextFormField(
                       controller: _passwordController,
-                      obscureText: true,
-                      decoration: const InputDecoration(
+                      obscureText: _obscurePassword,
+                      decoration: InputDecoration(
                         hintText: '••••••••',
-                        prefixIcon: Icon(Icons.lock_outline_rounded),
+                        prefixIcon: const Icon(Icons.lock_outline_rounded),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            _obscurePassword
+                                ? Icons.visibility_off_rounded
+                                : Icons.visibility_rounded,
+                          ),
+                          onPressed: () {
+                            setState(
+                                () => _obscurePassword = !_obscurePassword);
+                          },
+                        ),
                       ),
                       validator: (v) {
                         if (v == null || v.isEmpty) {
@@ -192,6 +193,34 @@ class _LoginScreenState extends State<LoginScreen>
                             ?.copyWith(color: AppColors.error),
                       ),
                     ],
+
+                    const SizedBox(height: AppValues.paddingLg),
+
+                    // Signup link
+                    Center(
+                      child: GestureDetector(
+                        onTap: () => Navigator.of(context)
+                            .pushReplacementNamed('/signup'),
+                        child: RichText(
+                          text: TextSpan(
+                            text: AppStrings.dontHaveAccount,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(color: AppColors.textSecondary),
+                            children: [
+                              TextSpan(
+                                text: AppStrings.signup,
+                                style: const TextStyle(
+                                  color: AppColors.primary,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),

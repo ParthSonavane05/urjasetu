@@ -1,26 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../core/constants/app_colors.dart';
+import '../core/constants/app_strings.dart';
 import '../core/constants/app_values.dart';
 import '../providers/navigation_provider.dart';
+import '../providers/theme_provider.dart';
 import 'dashboard/dashboard_screen.dart';
-import 'trades/trades_screen.dart';
-import 'policy/policy_screen.dart';
-import 'wallet/wallet_screen.dart';
+import 'marketplace/marketplace_screen.dart';
+import 'analytics/analytics_screen.dart';
+import 'profile/profile_screen.dart';
 
 class AppShell extends StatelessWidget {
   const AppShell({super.key});
 
   static const _screens = [
     DashboardScreen(),
-    TradesScreen(),
-    PolicyScreen(),
-    WalletScreen(),
+    MarketplaceScreen(),
+    AnalyticsScreen(),
+    ProfileScreen(),
+  ];
+
+  static const _navItems = [
+    _NavData(Icons.home_rounded, AppStrings.home),
+    _NavData(Icons.store_rounded, AppStrings.marketplace),
+    _NavData(Icons.insights_rounded, AppStrings.analytics),
+    _NavData(Icons.person_rounded, AppStrings.profile),
   ];
 
   @override
   Widget build(BuildContext context) {
     final navProvider = context.watch<NavigationProvider>();
+    final isDark = context.watch<ThemeProvider>().isDarkMode;
 
     return Scaffold(
       body: AnimatedSwitcher(
@@ -31,50 +41,27 @@ class AppShell extends StatelessWidget {
       ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          color: AppColors.surfaceLight,
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.shadow,
-              blurRadius: 12,
-              offset: const Offset(0, -2),
+          color: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
+          border: Border(
+            top: BorderSide(
+              color: isDark ? AppColors.borderDark : AppColors.border,
+              width: 0.5,
             ),
-          ],
+          ),
         ),
         child: SafeArea(
           child: SizedBox(
             height: AppValues.bottomNavHeight,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                _NavItem(
-                  index: 0,
-                  icon: Icons.dashboard_rounded,
-                  label: 'Dashboard',
-                  isActive: navProvider.currentIndex == 0,
-                  onTap: () => navProvider.setIndex(0),
-                ),
-                _NavItem(
-                  index: 1,
-                  icon: Icons.swap_horiz_rounded,
-                  label: 'Trades',
-                  isActive: navProvider.currentIndex == 1,
-                  onTap: () => navProvider.setIndex(1),
-                ),
-                _NavItem(
-                  index: 2,
-                  icon: Icons.tune_rounded,
-                  label: 'Policy',
-                  isActive: navProvider.currentIndex == 2,
-                  onTap: () => navProvider.setIndex(2),
-                ),
-                _NavItem(
-                  index: 3,
-                  icon: Icons.account_balance_wallet_rounded,
-                  label: 'Wallet',
-                  isActive: navProvider.currentIndex == 3,
-                  onTap: () => navProvider.setIndex(3),
-                ),
-              ],
+              children: List.generate(_navItems.length, (index) {
+                return _NavItem(
+                  icon: _navItems[index].icon,
+                  label: _navItems[index].label,
+                  isActive: navProvider.currentIndex == index,
+                  onTap: () => navProvider.setIndex(index),
+                );
+              }),
             ),
           ),
         ),
@@ -83,15 +70,19 @@ class AppShell extends StatelessWidget {
   }
 }
 
+class _NavData {
+  final IconData icon;
+  final String label;
+  const _NavData(this.icon, this.label);
+}
+
 class _NavItem extends StatelessWidget {
-  final int index;
   final IconData icon;
   final String label;
   final bool isActive;
   final VoidCallback onTap;
 
   const _NavItem({
-    required this.index,
     required this.icon,
     required this.label,
     required this.isActive,
@@ -127,10 +118,8 @@ class _NavItem extends StatelessWidget {
             Text(
               label,
               style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                    color:
-                        isActive ? AppColors.primary : AppColors.textMuted,
-                    fontWeight:
-                        isActive ? FontWeight.w700 : FontWeight.w400,
+                    color: isActive ? AppColors.primary : AppColors.textMuted,
+                    fontWeight: isActive ? FontWeight.w700 : FontWeight.w400,
                     fontSize: 10,
                   ),
             ),
