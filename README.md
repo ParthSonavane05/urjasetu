@@ -312,28 +312,6 @@ lib/
 
 # How to Run the Project
 
-## Backend Setup
-
-Install dependencies:
-
-```
-pip install fastapi uvicorn pandas
-```
-
-Run the server:
-
-```
-uvicorn backend.api.main:app --host 0.0.0.0 --port 8000 --reload
-```
-
-API documentation will be available at:
-
-```
-http://127.0.0.1:8000/docs
-```
-
----
-
 ## Mobile App Setup
 
 Install dependencies:
@@ -346,12 +324,6 @@ Run the application:
 
 ```
 flutter run
-```
-
-For Android emulator, the backend base URL should be:
-
-```
-http://10.0.2.2:8000
 ```
 
 ---
