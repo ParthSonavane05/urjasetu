@@ -353,5 +353,8 @@ Possible extensions for the system include:
 
 This project was developed as part of a hackathon prototype and is intended for educational and research purposes.
 
----
-[![Demo]([https://youtube.com/shorts/jE1CvyT34T0?si=5HMoyodqGkTGbX0i])
+## 🎬 Demo
+
+[![Watch Demo](https://img.youtube.com/vi/jE1CvyT34T0/0.jpg)](https://youtube.com/shorts/jE1CvyT34T0)
+
+👉 Click to watch full demo
