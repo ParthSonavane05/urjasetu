@@ -2,17 +2,6 @@
 
 ### Peer-to-Peer Energy Trading Platform
 
-**Team Name:** Laminar Flow
-
-**Team Members:**
-
-* Parth Sonawane
-* Kanishk Salunkhe
-* Dhruv Patil
-* Alok Bhadage
-
----
-
 # Overview
 
 **UrjaSetu** is a prototype peer-to-peer (P2P) energy trading platform designed for decentralized microgrids. The system allows households with rooftop solar panels to **sell surplus electricity directly to nearby homes**, reducing reliance on centralized power grids.
@@ -365,8 +354,4 @@ Possible extensions for the system include:
 This project was developed as part of a hackathon prototype and is intended for educational and research purposes.
 
 ---
-
-# Acknowledgment
-
-Developed by **Team Laminar Flow** as an experimental prototype to explore decentralized energy trading systems and microgrid energy markets.
-
+[![Demo]([https://youtube.com/shorts/jE1CvyT34T0?si=5HMoyodqGkTGbX0i])
